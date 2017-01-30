@@ -3,11 +3,10 @@ A rate limiter for Adonis JS.
 
 ### Installation
 
-To get the latest version of Adonis Throttle, simply clone this repository into your `/providers` folder.
+To get the latest version of Adonis Throttle, simply run
 
 ```
-// Run from root directory of your project.
-git clone https://github.com/masasron/adonis-throttle.git ./providers/adonis-throttle
+npm install adonis-throttle
 ```
 
 Once Adonis Throttle is installed, you need to register the service provider. Open up bootstrap/app.js and add the following to the providers key.
