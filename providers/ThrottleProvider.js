@@ -7,7 +7,7 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
-*/
+ */
 
 const ServiceProvider = require('adonis-fold').ServiceProvider
 
@@ -16,12 +16,12 @@ const CacheDriver = require('../src/Cache')
 
 class ThrottleProvider extends ServiceProvider {
 
-  * register () {
-    this.app.bind('Adonis/Addons/Throttle', function (app) {
-      return new Throttle(new CacheDriver)
-    })
-  }
-  
+    * register() {
+        this.app.bind('Adonis/Addons/Throttle', function(app) {
+            return new Throttle(new CacheDriver)
+        })
+    }
+
 }
 
 module.exports = ThrottleProvider
