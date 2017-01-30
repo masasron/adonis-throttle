@@ -11,7 +11,7 @@ npm install adonis-throttle
 
 Once Adonis Throttle is installed, you need to register the service provider. Open up bootstrap/app.js and add the following to the providers key.
 
-* ```__dirname + '/../providers/adonis-throttle/providers/ThrottleProvider'```
+* ```'adonis-throttle/providers/ThrottleProvider'```
 
 You can register the Throttle facade in the aliases key of your bootstrap/app.js file if you like.
 
