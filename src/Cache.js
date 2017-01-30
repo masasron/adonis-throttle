@@ -11,30 +11,14 @@
 
 class Cache {
 
+    /**
+     * Create a new instance
+     *
+     */
     constructor() {
         this.data = {}
         this.timers = {}
         this.expirations = {}
-    }
-
-    static get Second() {
-        return 1000;
-    }
-
-    static get Minute() {
-        return Cache.Second * 60
-    }
-
-    static get Hour() {
-        return Cache.Minute * 60
-    }
-
-    static get Day() {
-        return Cache.Hour * 24
-    }
-
-    static get Week() {
-        return Cache.Day * 7
     }
 
     /**
