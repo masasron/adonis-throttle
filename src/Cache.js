@@ -17,51 +17,125 @@ class Cache {
         this.expirations = {}
     }
 
-    put(key, value, time) {
+    static get Second() {
+        return 1000;
+    }
+
+    static get Minute() {
+        return Cache.Second * 60
+    }
+
+    static get Hour() {
+        return Cache.Minute * 60
+    }
+
+    static get Day() {
+        return Cache.Hour * 24
+    }
+
+    static get Week() {
+        return Cache.Day * 7
+    }
+
+    /**
+     *
+     * Generate cache.
+     *
+     * @param {String} key
+     * @param {Mixed} value
+     * @param {Integer} miliseconds
+     *
+     * @return {TimeoutPointer}
+     */
+    put(key, value, miliseconds) {
         if (this.timers[key]) {
             clearInterval(this.timers[key])
         }
         let now = new Date().getTime()
         this.data[key] = value
-        this.expirations[key] = now + time
-        this.timers[key] = this.deleteAfter(key, time)
+        this.expirations[key] = now + miliseconds
+        this.timers[key] = this.deleteAfter(key, miliseconds)
     }
 
-    deleteAfter(key, seconds) {
+    /**
+     *
+     * Delete cache key after a number of miliseconds.
+     *
+     * @param {String} key
+     * @param {Integer} miliseconds
+     *
+     * @return {TimeoutPointer}
+     */
+    deleteAfter(key, miliseconds) {
         return setTimeout(function() {
-            console.log('clear cache for key', key)
             delete this.data[key]
             delete this.timers[key]
             delete this.expirations[key]
-        }.bind(this), seconds * 1000)
+        }.bind(this), miliseconds)
     }
 
+    /**
+     *
+     * Get stored data by key
+     *
+     * @param {String} key
+     *
+     * @return {Mixed}
+     */
     get(key) {
         return this.data[key]
     }
 
+    /**
+     *
+     * Get the number of seconds left until cache data is cleared.
+     *
+     * @param {String} key
+     *
+     * @return {Integer}
+     */
     secondsToExpiration(key) {
         try {
             return (this.expirations[key] - new Date().getTime()) / 1000
         } catch (ex) {
-            // ...
+            // Added try due to possible division by zero.
+            console.log('Exception->', ex)
         }
         return 0
     }
 
+    /**
+     *
+     * Increment expiration of stored data by a number of seconds.
+     *
+     * @param {String} key
+     * @param {Integer} seconds
+     *
+     * @return {Cache}
+     */
     incrementExpiration(key, seconds) {
         seconds = seconds || 5
         clearTimeout(this.timers[key])
         let penalty = (this.secondsToExpiration(key) + seconds)
-        this.expirations[key] = new Date().getTime() + (penalty * 1000)
-        this.timers[key] = this.deleteAfter(key, penalty)
+        let penaltyInMiliseconds = penalty * 1000
+        this.expirations[key] = new Date().getTime() + penaltyInMiliseconds
+        this.timers[key] = this.deleteAfter(key, penaltyInMiliseconds)
+        return this
     }
 
+    /**
+     *
+     * Increment stored value by one.
+     *
+     * @param {String} key
+     *
+     * @return {Cache}
+     */
     increment(key) {
-        if (this.data[key]) {
-            this.data[key] = parseInt(this.data[key]) + 1
+        if (!isNaN(this.data[key])) {
+            this.data[key]++
         }
-        return this.data[key]
+        return this
     }
 
 }
