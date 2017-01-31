@@ -12,13 +12,18 @@
 const ServiceProvider = require('adonis-fold').ServiceProvider
 
 const Throttle = require('../src/Throttle')
-const CacheDriver = require('../src/Cache')
+const Cache = require('../src/Drivers/Cache/Memory')
+const ThrottleRequests = require('../middleware/ThrottleRequests')
+
 
 class ThrottleProvider extends ServiceProvider {
 
     * register() {
-        this.app.bind('Adonis/Addons/Throttle', function(app) {
-            return new Throttle(new CacheDriver)
+        this.app.singleton('Adonis/Addons/Throttle', function () {
+	      return new Throttle(new Cache())
+	    })
+        this.app.bind('Adonis/Middleware/Throttle', function (app) {
+            return new ThrottleRequests(app.use('Adonis/Addons/Throttle'))
         })
     }
 

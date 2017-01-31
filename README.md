@@ -6,48 +6,82 @@ A rate limiter for Adonis JS.
 To get the latest version of Adonis Throttle, simply run
 
 ```
-npm install adonis-throttle
+npm install adonis-throttle --save
 ```
 
-Once Adonis Throttle is installed, you need to register the service provider. Open up bootstrap/app.js and add the following to the providers key.
+Once Adonis Throttle is installed, you need to register the service provider.
+Open up bootstrap/app.js and add the following to the providers key.
 
-* ```'adonis-throttle/providers/ThrottleProvider'```
+```js
+// bootstrap/app.js 
+const providers = [
+  ...,
+  'adonis-throttle/providers/ThrottleProvider',
+]
+```
 
 You can register the Throttle facade in the aliases key of your bootstrap/app.js file if you like.
 
-* ```  Throttle: 'Adonis/Addons/Throttle' ```
+```js
+// bootstrap/app.js 
+const aliases = {
+  ...,
+  Throttle: 'Adonis/Addons/Throttle'
+}
+```
 
-### Basic Middleware Example
-
-1. Create ThrottleMiddleware.js in the app/Http/Middlewares folder.
+Enable the throttle middleware inside `app/Http/kernel.js` file.
 
 ```js
-'use strict'
+// app/Http/kernel.js 
 
-const Throttle = use('Throttle');
+const namedMiddleware = {
+  ...,
+  throttle: 'Adonis/Middleware/ThrottleRequests'
+}
+```
 
-class ThrottleMiddleware {
+### Usage
 
-  * handle (request, response, next, limit, time, key) {
-     Throttle.resource(key+'-'+request.ip(),parseInt(limit),parseInt(time))
-     if (!Throttle.attempt()){
-     	Throttle.incrementExpiration().throwException()
-     }
-	 yield next
-  }
+#### Middleware
+
+Use the throttle middleware to limit request for a given route.
+
+```js
+// Default Throttle 60 request per minute
+Route.post('login','Auth/LoginController.postLogin').middleware('throttle')
+```
+
+The following example throttle request be limiting the number of login attempts for 10 requests every 120 seconds.
+```js
+Route.post('login','Auth/LoginController.postLogin').middleware('throttle:10,120')
+```
+
+Throttle 10 request per minute
+```js
+Route.post('login','Auth/LoginController.postLogin').middleware('throttle:10')
+```
+
+If the subject exceeds the maximum number of requests, it will return Too Many Attempts. with status code of 429.
+By default we are extending the decay of the throttle by 5 seconds, for each request the subject after he exceeds the maximum number of requests.
+
+#### Advance
+
+You can also use Throttle from inside your controllers or anywere else.
+
+```js
+
+const Throttle = use('Throttle')
+
+class TestController {
+	
+	run(request,response){
+		const currentUser = request.auth.getCurrentUser()
+		// Limit for a specific user
+		Throttle.resource(currentUser.id,10,60)
+		if (!Throttle.attempt()){
+
+		}
+	}
 
 }
-
-module.exports = ThrottleMiddleware
-```
-
-2. Register on app/Http/kernel.js under `namedMiddleware` add ``` throttle: 'App/Http/Middleware/ThrottleMiddleware' ```
-
-
-3. Use it
-
-```js
-Route.get('test',function* (request,response){
-	response.send('HELLO THERE :D')
-}).middleware('throttle:10,60,action') // allow up to 10 requests in 60 seconds.
-```

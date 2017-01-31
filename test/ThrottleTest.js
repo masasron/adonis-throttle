@@ -3,9 +3,9 @@
 var assert = require('assert');
 
 describe('Throttle', () => {
-    const cacheDriver = require('../src/Cache')
+    const Cache = require('../src/Drivers/Cache/Memory')
     const Throttle = require('../src/Throttle')
-    const throttle = new Throttle(new cacheDriver)
+    const throttle = new Throttle(new Cache)
     throttle.resource('testing',1,3) // 1 request per second
     it('should return true on the first time', () => {
         assert.equal(throttle.attempt(),true)

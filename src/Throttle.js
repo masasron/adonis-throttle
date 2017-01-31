@@ -9,33 +9,31 @@
  * file that was distributed with this source code.
  */
 
-const RateLimitExceededException = require('./RateLimitExceededException')
-
 class Throttle {
 
     /**
      * Create a new instance
      * 
-     * @param {cacheDriver} cacheDriver
+     * @param {cacheDriver} cache
      * @return {Boolean}
      */
-    constructor(cacheDriver) {
-        this.store = cacheDriver
+    constructor(cache) {
+        this.store = cache
     }
 
     /**
      * Init a resource.
      *
      * @param {String} key
-     * @param {Integer} limit
-     * @param {Integer} time - amount of time in seconds
+     * @param {Number} maxAttempts
+     * @param {Number} decayInSeconds
      *
      * @return {Boolean}
      */
-    resource(key, limit, time) {
+    resource(key, maxAttempts = 60, decayInSeconds = 60) {
         this.key = key
-        this.limit = limit
-        this.time = time
+        this.maxAttempts = maxAttempts
+        this.decayInSeconds = decayInSeconds
     }
 
     /**
@@ -44,24 +42,15 @@ class Throttle {
      * @return {Boolean}
      */
     attempt() {
-        const response = this.check()
+        let response = this.check()
         this.hit()
         return response
     }
 
     /**
-     * Throw rate limit exceeded exception
-     *
-     * @return void
-     */
-    throwException() {
-        throw new RateLimitExceededException(`Please wait ${this.store.secondsToExpiration(this.key)} seconds`)
-    }
-
-    /**
      * Increment expiration of the current resource.
      * 
-     * @param {Integer} seconds - default is 5
+     * @param {Number} seconds - default is 5
      *
      * @return {Throttle}
      */
@@ -79,13 +68,13 @@ class Throttle {
         if (this.count()) {
             return this.store.increment(this.key)
         }
-        return this.store.put(this.key, 1, this.time)
+        return this.store.put(this.key, 1, this.decayInSeconds*1000)
     }
 
     /**
      * Get the throttle hit count.
      *
-     * @return {Integer}
+     * @return {Number}
      */
     count() {
         let count = this.store.get(this.key)
@@ -101,7 +90,16 @@ class Throttle {
      * @return {Boolean}
      */
     check() {
-        return this.count() < this.limit;
+        return this.count() < this.maxAttempts;
+    }
+
+    /**
+     * Get the number of remaining attempts
+     *
+     * @return {Number}
+     */
+    remainingAttempts(){
+        return this.maxAttempts-this.count()
     }
 
 }
