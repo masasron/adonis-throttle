@@ -80,8 +80,9 @@ class TestController {
 		// Limit for a specific user
 		Throttle.resource(currentUser.id,10,60)
 		if (!Throttle.attempt()){
-
+			return response.send('stop!')
 		}
+		response.send('secret')
 	}
 
 }
