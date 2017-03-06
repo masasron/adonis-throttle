@@ -37,7 +37,7 @@ Enable the throttle middleware inside `app/Http/kernel.js` file.
 
 const namedMiddleware = {
   ...,
-  throttle: 'Adonis/Middleware/ThrottleRequests'
+  throttle: 'Adonis/Middleware/Throttle'
 }
 ```
 
