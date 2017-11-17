@@ -13,7 +13,7 @@ Once Adonis Throttle is installed, you need to register the service provider.
 Open up bootstrap/app.js and add the following to the providers key.
 
 ```js
-// bootstrap/app.js 
+// start/app.js 
 const providers = [
   ...,
   'adonis-throttle/providers/ThrottleProvider',
@@ -23,7 +23,7 @@ const providers = [
 You can register the Throttle facade in the aliases key of your bootstrap/app.js file if you like.
 
 ```js
-// bootstrap/app.js 
+// start/app.js 
 const aliases = {
   ...,
   Throttle: 'Adonis/Addons/Throttle'
@@ -33,7 +33,7 @@ const aliases = {
 Enable the throttle middleware inside `app/Http/kernel.js` file.
 
 ```js
-// app/Http/kernel.js 
+// start/kernel.js 
 
 const namedMiddleware = {
   ...,

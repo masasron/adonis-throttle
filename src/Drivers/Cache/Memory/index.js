@@ -19,7 +19,6 @@ class Cache {
         this.data = {}
         this.timers = {}
         this.expirations = {}
-        console.log('cache was init')
     }
 
     /**
