@@ -1,7 +1,7 @@
 {
   "name": "adonis-throttle",
-  "version": "2.0.1",
-  "description": "A rate limiter for Adonis JS",
+  "version": "2.0.2",
+  "description": "A rate limiter for Adonis 4",
   "main": "src/Throttle.js",
   "scripts": {
     "test": "mocha --timeout 5000"
@@ -15,6 +15,8 @@
     "limiter",
     "nodejs",
     "throttle",
+    "adonis",
+    "node",
     "adonisjs"
   ],
   "author": "Ron Masas",
