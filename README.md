@@ -1,5 +1,8 @@
 # Adonis Throttle
-A rate limiter for Adonis JS.
+A rate limiter for Adonis 4.
+
+[![npm version](https://badge.fury.io/js/adonis-throttle.svg)](https://badge.fury.io/js/adonis-throttle)
+[![npm](https://img.shields.io/npm/dt/adonis-throttle.svg)](https://www.npmjs.com/package/adonis-throttle)
 
 ### Installation
 
@@ -30,7 +33,7 @@ const aliases = {
 }
 ```
 
-Enable the throttle middleware inside `app/Http/kernel.js` file.
+Enable the throttle middleware inside `start/kernel.js` file.
 
 ```js
 // start/kernel.js 
