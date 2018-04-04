@@ -1,10 +1,12 @@
 # Adonis Throttle
-A rate limiter for Adonis 4.
+A rate limiter for Adonis 4.1
 
 [![npm version](https://badge.fury.io/js/adonis-throttle.svg)](https://badge.fury.io/js/adonis-throttle)
 [![npm](https://img.shields.io/npm/dt/adonis-throttle.svg)](https://www.npmjs.com/package/adonis-throttle)
 
 ### Installation
+
+> For AdonisJS below version 4.1, you need install 2.0.x
 
 To get the latest version of Adonis Throttle, simply run
 
