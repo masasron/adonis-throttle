@@ -32,7 +32,7 @@ class ThrottleRequests {
      *
      * @public
      */
-    async handle({request, response}, next, maxAttempts = 60, decayInSeconds = 60, uid = false) {
+    async handle({request, response}, next, [ maxAttempts = 60, decayInSeconds = 60 ], uid = false) {
         const signature = this._resolveSignature(request, uid)
         this.throttle.resource(signature, parseInt(maxAttempts), parseInt(decayInSeconds))
 

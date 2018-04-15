@@ -1,7 +1,7 @@
 {
   "name": "adonis-throttle",
-  "version": "2.0.2",
-  "description": "A rate limiter for Adonis 4",
+  "version": "2.1.0",
+  "description": "A rate limiter for Adonis 4.1",
   "main": "src/Throttle.js",
   "scripts": {
     "test": "mocha --timeout 5000"
