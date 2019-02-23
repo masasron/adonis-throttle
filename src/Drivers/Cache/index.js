@@ -27,18 +27,23 @@ class Cache {
       throw new TypeError('Cannot instantiate abstract base class: Cache')
     }
 
-    const abstractMethods = ['get', 'put', 'increment', 'incrementExpiration']
-    const implements = abstractMethods.map(name => {
+    const abstractMethods = [
+      'get',
+      'put',
+      'increment',
+      'incrementExpiration'
+    ].map(name => {
       const implemented = typeof this[name] === 'function'
       return { name, implemented }
     })
-    const abstractMethod = method => method.implemented
 
-    if (!implements.every(abstractMethod)) {
-      const unimplemented = implements.filter(method => !method.implemented)
+    if (!abstractMethods.every(method => method.implemented)) {
+      const message = 'Implementing class does not override abstract methods: '
+      const unimplemented = abstractMethods
+        .filter(method => !method.implemented)
         .map(method => method.name)
         .join(', ')
-      const message = 'Implementing class does not override abstract methods: '
+
       throw new TypeError(message + unimplemented)
     }
   }
