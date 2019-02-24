@@ -9,13 +9,16 @@
  * file that was distributed with this source code.
  */
 
-class Cache {
+const Cache = require('..')
+
+class MemoryCache extends Cache {
 
     /**
      * Create a new instance
      *
      */
     constructor() {
+        super()
         this.data = {}
         this.timers = {}
         this.expirations = {}
@@ -124,4 +127,4 @@ class Cache {
 
 }
 
-module.exports = Cache
+module.exports = MemoryCache
