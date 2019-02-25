@@ -16,18 +16,17 @@ const Cache = require('../src/Drivers/Cache/Memory')
 const ThrottleRequests = require('../middleware/ThrottleRequests')
 
 class ThrottleProvider extends ServiceProvider {
+  register() {
+    this.app.manager('Adonis/Addons/Throttle', require('../src/Manager'))
 
-    register() {
-        this.app.manager('Adonis/Addons/Throttle', require('../src/Manager'))
-        this.app.singleton('Adonis/Addons/Throttle',  () => {
-          return new Throttle(new Cache())
-        })
+    this.app.singleton('Adonis/Addons/Throttle',  () => {
+      return new Throttle(new Cache())
+    })
 
-        this.app.bind('Adonis/Middleware/Throttle',  (app) => {
-            return new ThrottleRequests(app.use('Adonis/Addons/Throttle'))
-        })
-    }
-
+    this.app.bind('Adonis/Middleware/Throttle',  (app) => {
+      return new ThrottleRequests(app.use('Adonis/Addons/Throttle'))
+    })
+  }
 }
 
 module.exports = ThrottleProvider
