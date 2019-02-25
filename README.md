@@ -99,7 +99,12 @@ class TestController {
 You can write your own cache driver by extending `Adonis/Addons/Throttle/Cache`
 abstract base class.
 
+For the purpose of this example, assume the contents of the file below are
+located at: `./lib/drivers/memcached`.
+
 ```js
+'use strict'
+
 const Cache = use('Adonis/Addons/Throttle/Cache')
 
 class Memcached extends Cache {
@@ -148,4 +153,19 @@ class Memcached extends Cache {
     return this
   }
 }
+```
+
+Then in `start/hooks.js`, register your driver:
+
+```js
+'use strict'
+
+const { ioc } = require('@adonisjs/fold')
+const { hooks } = require('@adonisjs/ignitor')
+const Memcached = require('./lib/drivers/memcached')
+
+hooks.after.providersRegistered(() => {
+  const ThrottleManager = use('Adonis/Addons/ThrottleManager')
+  ThrottleManager.extend('memcached', Memcached)
+})
 ```
