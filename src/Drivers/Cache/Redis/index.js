@@ -1,12 +1,27 @@
 'use strict'
 
-const { ioc } = require('@adonisjs/fold')
 const Cache = require('..')
 
 class Redis extends Cache {
-  constructor() {
+  /**
+   * Namespaces to inject by IoC container.
+   *
+   * @attribute inject
+   * @return {Array}
+   */
+  static get inject() {
+    return ['Adonis/Src/Config', 'Adonis/Addons/Redis'];
+  }
+
+  constructor(Config, Redis) {
     super()
-    this.Redis = ioc.use('Redis')
+
+    const config = Config.merge('throttle.redis', {
+      port: 6379,
+      host: '127.0.0.1'
+    })
+
+    this.redis = Redis.namedConnection('__adonis__throttle', config)
   }
 
   /**
@@ -18,7 +33,7 @@ class Redis extends Cache {
    * @return {TimeoutPointer}
    */
   put(key, value, milliseconds) {
-    this.Redis.set(key, value, 'px', milliseconds)
+    this.redis.set(key, value, 'px', milliseconds)
   }
 
   /**
@@ -28,7 +43,7 @@ class Redis extends Cache {
    * @return {Mixed}
    */
   get(key) {
-    return this.Redis.get(key)
+    return this.redis.get(key)
   }
 
   /**
@@ -38,7 +53,7 @@ class Redis extends Cache {
    * @return {Cache}
    */
   increment(key) {
-    this.Redis.incr(key)
+    this.redis.incr(key)
     return this
   }
 
@@ -50,7 +65,7 @@ class Redis extends Cache {
    * @return {Cache}
    */
   incrementExpiration(key, seconds) {
-    this.Redis.expire(key, seconds)
+    this.redis.expire(key, seconds)
     return this
   }
 }
