@@ -24,14 +24,17 @@ class ThrottleProvider extends ServiceProvider {
       return new ThrottleManager()
     })
 
-    this.app.singleton('Adonis/Addons/Throttle',  () => {
-      return new Throttle(new Cache())
+    this.app.singleton('Adonis/Addons/Throttle', app => {
+      const Config = app.use('Adonis/Src/Config')
+      const ThrottleManager = app.use('Adonis/Addons/ThrottleManager')
+      const driver = Config.get('throttle.driver', 'memory')
+      const driverInstance = ThrottleManager.makeDriverInstance(driver)
+      return new Throttle(driverInstance)
     })
 
     this.app.bind('Adonis/Middleware/Throttle', app => {
-      const Config = app.use('Adonis/Src/Config')
-      const ThrottleManager = app.use('Adonis/Addons/ThrottleManager')
-      return new ThrottleRequests(Config, ThrottleManager)
+      const Throttle = app.use('Adonis/Addons/Throttle')
+      return new ThrottleRequests(Throttle)
     })
   }
 }

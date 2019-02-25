@@ -10,15 +10,12 @@
  */
 
 const Crypto = require('crypto')
-const Throttle = require('../src/Throttle')
 const TooManyRequestsException = require('../src/Exceptions/TooManyRequests')
 
 class ThrottleRequests {
 
-    constructor(Config, ThrottleManager) {
-        const driver = Config.get('throttle.driver', 'memory')
-        const driverInstance = ThrottleManager.makeDriverInstance(driver)
-        this.throttle = new Throttle(driverInstance)
+    constructor(throttle) {
+        this.throttle = throttle
     }
 
     /**
