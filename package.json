@@ -28,5 +28,8 @@
   "devDependencies": {
     "@adonisjs/fold": "^4.0.9",
     "mocha": "^3.2.0"
+  },
+  "dependencies": {
+    "@adonisjs/generic-exceptions": "^3.0.1"
   }
 }
