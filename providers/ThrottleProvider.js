@@ -31,6 +31,10 @@ class ThrottleProvider extends ServiceProvider {
       return new Throttle(driverInstance)
     })
 
+    this.app.bind('Adonis/Addons/Throttle/Cache', () => {
+      return require('../src/Drivers/Cache')
+    })
+
     this.app.bind('Adonis/Middleware/Throttle', app => {
       const Throttle = app.use('Adonis/Addons/Throttle')
       return new ThrottleRequests(Throttle)
