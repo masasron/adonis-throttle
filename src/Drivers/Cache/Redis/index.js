@@ -1,8 +1,8 @@
 'use strict'
 
-const Cache = require('..')
+const BaseCache = require('../BaseCache')
 
-class Redis extends Cache {
+class Redis extends BaseCache {
   /**
    * Namespaces to inject by IoC container.
    *
