@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-const BaseCache = require('../BaseCache')
+const Cache = require('..')
 
-class Memory extends BaseCache {
+class Memory extends Cache {
 
     /**
      * Create a new instance

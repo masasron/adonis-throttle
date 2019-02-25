@@ -12,7 +12,7 @@
 const { ioc } = require('@adonisjs/fold')
 const { InvalidArgumentException } = require('@adonisjs/generic-exceptions')
 const drivers = require('./Drivers')
-const BaseCache = require('./Drivers/Cache/BaseCache')
+const Cache = require('./Drivers/Cache')
 
 /**
  * The throttle manager class is exposed as IoC container binding, which can
@@ -40,7 +40,7 @@ class ThrottleManager {
    * @return {void}
    */
   extend(key, implementation) {
-    if (!(implementation.prototype instanceof BaseCache)) {
+    if (!(implementation.prototype instanceof Cache)) {
       const name = implementation.name
       const message = `${name} class must extend BaseCache abstract base class`
       throw new TypeError(message, 500, 'E_INVALID_THROTTLE_DRIVER_IMPLEMENTATION')
