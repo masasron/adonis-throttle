@@ -12,7 +12,6 @@
 const { ServiceProvider } = require('@adonisjs/fold')
 
 const Throttle = require('../src/Throttle')
-const Cache = require('../src/Drivers/Cache/Memory')
 const ThrottleRequests = require('../middleware/ThrottleRequests')
 
 class ThrottleProvider extends ServiceProvider {
