@@ -11,7 +11,7 @@
 
 const Cache = require('..')
 
-class MemoryCache extends Cache {
+class Memory extends Cache {
 
     /**
      * Create a new instance
@@ -127,4 +127,4 @@ class MemoryCache extends Cache {
 
 }
 
-module.exports = MemoryCache
+module.exports = Memory

@@ -3,7 +3,7 @@
 const { ioc } = require('@adonisjs/fold')
 const Cache = require('..')
 
-class RedisCache extends Cache {
+class Redis extends Cache {
   constructor() {
     super()
     this.Redis = ioc.use('Redis')
@@ -55,4 +55,4 @@ class RedisCache extends Cache {
   }
 }
 
-module.exports = RedisCache
+module.exports = Redis
