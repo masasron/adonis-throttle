@@ -1,24 +1,25 @@
 # Adonis Throttle
+
 A rate limiter for Adonis 4.1
 
 [![npm version](https://badge.fury.io/js/adonis-throttle.svg)](https://badge.fury.io/js/adonis-throttle)
 [![npm](https://img.shields.io/npm/dt/adonis-throttle.svg)](https://www.npmjs.com/package/adonis-throttle)
 
-### Installation
+## Installation
 
 > For AdonisJS below version 4.1, you need install 2.0.x
 
-To get the latest version of Adonis Throttle, simply run
+To get the latest version of Adonis Throttle, simply run:
 
 ```
-npm install adonis-throttle --save
+adonis install adonis-throttle
 ```
 
 Once Adonis Throttle is installed, you need to register the service provider.
 Open up bootstrap/app.js and add the following to the providers key.
 
 ```js
-// start/app.js 
+// start/app.js
 const providers = [
   ...,
   'adonis-throttle/providers/ThrottleProvider',
@@ -28,7 +29,7 @@ const providers = [
 You can register the Throttle facade in the aliases key of your bootstrap/app.js file if you like.
 
 ```js
-// start/app.js 
+// start/app.js
 const aliases = {
   ...,
   Throttle: 'Adonis/Addons/Throttle'
@@ -38,7 +39,7 @@ const aliases = {
 Enable the throttle middleware inside `start/kernel.js` file.
 
 ```js
-// start/kernel.js 
+// start/kernel.js
 
 const namedMiddleware = {
   ...,
@@ -46,9 +47,9 @@ const namedMiddleware = {
 }
 ```
 
-### Usage
+## Usage
 
-#### Middleware
+### Middleware
 
 Use the throttle middleware to limit request for a given route.
 
@@ -70,7 +71,7 @@ Route.post('login','Auth/LoginController.postLogin').middleware('throttle:10')
 If the subject exceeds the maximum number of requests, it will return Too Many Attempts. with status code of 429.
 By default we are extending the decay of the throttle by 5 seconds, for each request the subject after he exceeds the maximum number of requests.
 
-#### Advance
+### Advanced usage
 
 You can also use Throttle from inside your controllers or anywere else.
 
@@ -79,7 +80,7 @@ You can also use Throttle from inside your controllers or anywere else.
 const Throttle = use('Throttle')
 
 class TestController {
-	
+
 	run(request,response){
 		const currentUser = request.auth.getCurrentUser()
 		// Limit for a specific user
@@ -91,3 +92,60 @@ class TestController {
 	}
 
 }
+```
+
+## Extending cache driver
+
+You can write your own cache driver by extending `Adonis/Addons/Throttle/Cache`
+abstract base class.
+
+```js
+const Cache = use('Adonis/Addons/Throttle/Cache')
+
+class Memcached extends Cache {
+    /**
+   * Get stored data by key.
+   * @param {String} key
+   *
+   * @return {Mixed}
+   */
+  get(key) {
+    // implement get
+  }
+
+  /**
+   * Generate cache.
+   * @param {String} key
+   * @param {Mixed} value
+   * @param {Integer} milliseconds
+   *
+   * @return {TimeoutPointer}
+   */
+  put(key, value, milliseconds) {
+    // implement put
+  }
+
+  /**
+   * Increment stored value by one.
+   * @param {String} key
+   *
+   * @return {Cache}
+   */
+  increment(key) {
+    // implement increment
+    return this
+  }
+
+  /**
+   * Increment expiration of stored data by number of seconds.
+   * @param {String} key
+   * @param {Integer} seconds
+   *
+   * @return {Cache}
+   */
+  incrementExpiration(key, seconds) {
+    // implement incrementExpiration
+    return this
+  }
+}
+```
