@@ -20,6 +20,9 @@
     "adonisjs"
   ],
   "author": "Ron Masas",
+  "contributors": [
+    "Andrew Jo <andrewjo@gmail.com> (https://github.com/AndrewJo)"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/masasron/adonis-throttle/issues"
