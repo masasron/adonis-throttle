@@ -20,12 +20,20 @@
     "adonisjs"
   ],
   "author": "Ron Masas",
+  "contributors": [
+    "Andrew Jo <andrewjo@gmail.com> (https://github.com/AndrewJo)"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/masasron/adonis-throttle/issues"
   },
   "homepage": "https://github.com/masasron/adonis-throttle#readme",
   "devDependencies": {
+    "@adonisjs/fold": "^4.0.9",
+    "@adonisjs/sink": "^1.0.17",
     "mocha": "^3.2.0"
+  },
+  "dependencies": {
+    "@adonisjs/generic-exceptions": "^3.0.1"
   }
 }
