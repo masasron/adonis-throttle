@@ -1,0 +1,41 @@
+version: 2
+jobs:
+  test:
+    docker:
+      - image: circleci/node:lts
+    working_directory: ~/adonis-throttle
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: npm install
+      - run:
+          name: Run tests
+          command: npm test
+  publish:
+    docker:
+      - image: circleci/node:lts
+    working_directory: ~/adonis-throttle
+    steps:
+      - checkout
+      - run:
+          name: Set npm token
+          command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+      - run:
+          name: Publish NPM package
+          command: npm publish
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test
+  release:
+    jobs:
+      - publish:
+          context: node.js package
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /v\d+(\.\d+){0,2}/
