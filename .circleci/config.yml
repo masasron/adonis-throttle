@@ -33,7 +33,6 @@ workflows:
   release:
     jobs:
       - publish:
-          context: node.js package
           filters:
             branches:
               ignore: /.*/

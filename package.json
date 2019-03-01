@@ -1,6 +1,6 @@
 {
   "name": "adonis-throttle",
-  "version": "2.2.1",
+  "version": "2.3.0",
   "description": "A rate limiter for Adonis 4.1",
   "main": "src/Throttle.js",
   "scripts": {
