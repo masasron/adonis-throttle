@@ -5,13 +5,11 @@ const { ioc } = require('@adonisjs/fold')
 const GE = require('@adonisjs/generic-exceptions')
 const { Config } = require('@adonisjs/sink')
 
-const ThrottleManager = require('../src/Manager')
+const manager = require('../src/Manager')
 const drivers = require('../src/Drivers')
 const Cache = require('../src/Drivers/Cache')
 
 describe('ThrottleManager', () => {
-  const manager = new ThrottleManager()
-
   before(() => {
     ioc.singleton('Adonis/Src/Config', () => new Config())
     ioc.singleton('Adonis/Addons/Redis', () => class Redis {
