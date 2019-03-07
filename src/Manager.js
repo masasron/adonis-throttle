@@ -68,4 +68,4 @@ class ThrottleManager {
   }
 }
 
-module.exports = ThrottleManager
+module.exports = new ThrottleManager()

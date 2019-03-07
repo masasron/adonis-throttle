@@ -19,8 +19,7 @@ class ThrottleProvider extends ServiceProvider {
     this.app.manager('Adonis/Addons/Throttle', require('../src/Manager'))
 
     this.app.bind('Adonis/Addons/ThrottleManager', () => {
-      const ThrottleManager = require('../src/Manager')
-      return new ThrottleManager()
+      return require('../src/Manager')
     })
 
     this.app.singleton('Adonis/Addons/Throttle', app => {
