@@ -5,6 +5,7 @@ A rate limiter for Adonis 4.1
 [![npm version](https://badge.fury.io/js/adonis-throttle.svg)](https://badge.fury.io/js/adonis-throttle)
 [![npm](https://img.shields.io/npm/dt/adonis-throttle.svg)](https://www.npmjs.com/package/adonis-throttle)
 [![CircleCI](https://img.shields.io/circleci/project/github/masasron/adonis-throttle.svg)](https://circleci.com/gh/masasron/adonis-throttle)
+[![Known Vulnerabilities](https://snyk.io/test/github/masasron/adonis-throttle/badge.svg?targetFile=package.json)](https://snyk.io/test/github/masasron/adonis-throttle?targetFile=package.json)
 
 ## Installation
 
