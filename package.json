@@ -4,7 +4,9 @@
   "description": "A rate limiter for Adonis 4.1",
   "main": "src/Throttle.js",
   "scripts": {
-    "test": "mocha --timeout 5000"
+    "test": "mocha --timeout 5000",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -34,6 +36,8 @@
     "mocha": "^6.1.0"
   },
   "dependencies": {
-    "@adonisjs/generic-exceptions": "^3.0.1"
-  }
+    "@adonisjs/generic-exceptions": "^3.0.1",
+    "snyk": "^1.189.0"
+  },
+  "snyk": true
 }
