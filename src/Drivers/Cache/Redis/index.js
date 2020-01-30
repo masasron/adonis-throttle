@@ -56,6 +56,17 @@ class Redis extends Cache {
   }
 
   /**
+   * Get number of seconds left until cache data is cleared.
+   * @param {String} key
+   *
+   * @return {Integer}
+   */
+  secondsToExpiration(key) {
+    // Coerce to integer
+    return this.redis.ttl(key) >>> 0;
+  }
+
+  /**
    * Increment stored value by one.
    * @param {String} key
    *
