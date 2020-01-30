@@ -13,7 +13,7 @@ A rate limiter for Adonis 4.1
 
 To get the latest version of Adonis Throttle, simply run:
 
-```
+```console
 adonis install adonis-throttle
 ```
 
@@ -61,11 +61,13 @@ Route.post('login','Auth/LoginController.postLogin').middleware('throttle')
 ```
 
 The following example throttle request be limiting the number of login attempts for 10 requests every 120 seconds.
+
 ```js
 Route.post('login','Auth/LoginController.postLogin').middleware('throttle:10,120')
 ```
 
 Throttle 10 request per minute
+
 ```js
 Route.post('login','Auth/LoginController.postLogin').middleware('throttle:10')
 ```
@@ -83,15 +85,15 @@ const Throttle = use('Throttle')
 
 class TestController {
 
-	run(request,response){
-		const currentUser = request.auth.getCurrentUser()
-		// Limit for a specific user
-		Throttle.resource(currentUser.id,10,60)
-		if (!Throttle.attempt()){
-			return response.send('stop!')
-		}
-		response.send('secret')
-	}
+  run(request,response){
+    const currentUser = request.auth.getCurrentUser()
+    // Limit for a specific user
+    Throttle.resource(currentUser.id,10,60)
+    if (!Throttle.attempt()){
+      return response.send('stop!')
+    }
+    response.send('secret')
+  }
 
 }
 ```
@@ -153,6 +155,16 @@ class Memcached extends Cache {
   incrementExpiration(key, seconds) {
     // implement incrementExpiration
     return this
+  }
+
+  /**
+   * Get number of seconds left until cache data is cleared.
+   * @param {String} key
+   *
+   * @return {Integer}
+   */
+  secondsToExpiration(key) {
+    // implement secondsToExpiration
   }
 }
 ```
