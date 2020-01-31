@@ -13,17 +13,18 @@ describe('ThrottleManager', () => {
   before(() => {
     ioc.singleton('Adonis/Src/Config', () => new Config())
     ioc.singleton('Adonis/Addons/Redis', () => class Redis {
-      static namedConnection() {}
+      static namedConnection() { }
     })
   })
 
   describe('#extend', () => {
     it('should add a new driver when provided driver implementation extends Cache abstract class', () => {
       class Memcached extends Cache {
-        get() {}
-        put() {}
-        increment() {}
-        incrementExpiration() {}
+        get() { }
+        put() { }
+        increment() { }
+        incrementExpiration() { }
+        secondsToExpiration() { }
       }
 
       manager.extend('memcached', Memcached)
@@ -31,7 +32,7 @@ describe('ThrottleManager', () => {
     })
 
     it('should throw TypeError when provided driver implementation doesn’t extend Cache abstract class', () => {
-      class Memcached {}
+      class Memcached { }
       assert.throws(() => manager.extend('memcached', Memcached), TypeError)
     })
   })
