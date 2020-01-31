@@ -31,7 +31,8 @@ class Cache {
       'get',
       'put',
       'increment',
-      'incrementExpiration'
+      'incrementExpiration',
+      'secondsToExpiration'
     ].map(name => {
       const implemented = typeof this[name] === 'function'
       return { name, implemented }
