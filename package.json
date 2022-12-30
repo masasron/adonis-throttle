@@ -33,7 +33,7 @@
   "devDependencies": {
     "@adonisjs/fold": "^4.0.9",
     "@adonisjs/sink": "^1.0.17",
-    "mocha": "^6.1.0"
+    "mocha": "^10.2.0"
   },
   "dependencies": {
     "@adonisjs/generic-exceptions": "^3.0.1",
